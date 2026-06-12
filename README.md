@@ -8,3 +8,7 @@
 | Aji Zaenul Musthofa | 5025241065 |
 | Riyan Fadli Amazzadin | 5025241068 |
 | Liem, Alfred Haryanto | 5025241100 |
+
+![CDM](./assets/FP_MBD_B_-_Kelompok_4.png)
+
+![PDM](./assets/FP_MBD_B_-_Kelompok_4_Physical_Export.png)
