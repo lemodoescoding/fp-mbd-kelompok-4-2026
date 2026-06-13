@@ -363,7 +363,26 @@ INSERT INTO Peminjaman (
     ('PM0199', DATE '2026-07-03', TIMESTAMP '2026-07-08 12:00:00', TIMESTAMP '2026-07-08 14:00:00', 'Kelas persiapan kompetisi', '5025241019', 'ST0004'),
     ('PM0200', DATE '2026-07-04', TIMESTAMP '2026-07-09 14:00:00', TIMESTAMP '2026-07-09 16:00:00', 'Kuliah tamu industri', '5025241020', 'ST0002');
 
+-- 1 ruangan yang belum pernah dipinjam
+INSERT INTO Ruangan (
+    id_ruangan,
+    nama_ruangan,
+    lokasi,
+    kapasitas,
+    status,
+    Departemen_id_departemen
+)
+VALUES (
+    'RNG00041',
+    'Ruang Seminar Database',
+    'Gedung Informatika Lantai 4',
+    60,
+    TRUE,
+    'DEP016'
+);
 -- Every loan has one room; every fifth loan reserves a second room.
+
+
 INSERT INTO Peminjaman_Ruangan (
     Peminjaman_id_peminjaman,
     Ruangan_id_ruangan
