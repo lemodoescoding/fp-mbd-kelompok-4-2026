@@ -1,4 +1,10 @@
-INSERT INTO Departemen VALUES
+-- Dummy data for the ITS room-loan database.
+-- PostgreSQL compatible and ordered to satisfy all foreign-key constraints.
+
+BEGIN;
+
+-- 40 department master rows.
+INSERT INTO Departemen (id_departemen, nama, fakultas) VALUES
     ('DEP001', 'Fisika', 'FSAD'),
     ('DEP002', 'Matematika', 'FSAD'),
     ('DEP003', 'Statistika', 'FSAD'),
@@ -40,7 +46,8 @@ INSERT INTO Departemen VALUES
     ('DEP039', 'Teknologi Rekayasa Otomasi', 'Vokasi'),
     ('DEP040', 'Sains Analitik Data', 'FSAD');
 
-INSERT INTO Fasilitas VALUES
+-- 40 facility master rows.
+INSERT INTO Fasilitas (id_fasilitas, nama) VALUES
     ('F00001', 'Proyektor LCD'),
     ('F00002', 'Layar Proyektor'),
     ('F00003', 'Papan Tulis'),
@@ -82,7 +89,8 @@ INSERT INTO Fasilitas VALUES
     ('F00039', 'Penyaring Udara'),
     ('F00040', 'Sistem Kontrol Akses');
 
-INSERT INTO Mahasiswa VALUES
+-- 40 student master rows.
+INSERT INTO Mahasiswa (nrp, nama, prodi, email) VALUES
     ('5025241001', 'Aditya Pratama', 'Fisika', 'aditya.pratama@its.ac.id'),
     ('5025241002', 'Aulia Rahma', 'Matematika', 'aulia.rahma@its.ac.id'),
     ('5025241003', 'Bagas Saputra', 'Statistika', 'bagas.saputra@its.ac.id'),
@@ -124,14 +132,23 @@ INSERT INTO Mahasiswa VALUES
     ('5025241039', 'Jihan Aulia', 'Teknologi Rekayasa Otomasi', 'jihan.aulia@its.ac.id'),
     ('5025241040', 'Kevin Jonathan', 'Sains Analitik Data', 'kevin.jonathan@its.ac.id');
 
-INSERT INTO StatusPeminjaman VALUES
+-- Valid room-loan workflow statuses.
+INSERT INTO StatusPeminjaman (id_statuspeminjaman, status) VALUES
     ('ST0001', 'Diajukan'),
     ('ST0002', 'Disetujui'),
     ('ST0003', 'Ditolak'),
     ('ST0004', 'Selesai'),
     ('ST0005', 'Dibatalkan');
 
-INSERT INTO Ruangan VALUES
+-- 40 room master rows.
+INSERT INTO Ruangan (
+    id_ruangan,
+    nama_ruangan,
+    lokasi,
+    kapasitas,
+    status,
+    Departemen_id_departemen
+) VALUES
     ('RNG00001', 'Ruang Sidang Fisika', 'Gedung F Lantai 2', 30, TRUE, 'DEP001'),
     ('RNG00002', 'Ruang Seminar Matematika', 'Gedung F Lantai 3', 60, TRUE, 'DEP002'),
     ('RNG00003', 'Laboratorium Statistika', 'Gedung F Lantai 4', 35, TRUE, 'DEP003'),
@@ -173,7 +190,11 @@ INSERT INTO Ruangan VALUES
     ('RNG00039', 'Lab Rekayasa Otomasi', 'Gedung Vokasi Lantai 2', 30, TRUE, 'DEP039'),
     ('RNG00040', 'Ruang Analitik Data', 'Gedung F Lantai 6', 50, TRUE, 'DEP040');
 
-INSERT INTO Fasilitas_Ruangan VALUES
+-- Three hardcoded facilities per room, for 120 unique relationships.
+INSERT INTO Fasilitas_Ruangan (
+    Fasilitas_id_fasilitas,
+    Ruangan_id_ruangan
+) VALUES
     ('F00001', 'RNG00001'),
     ('F00008', 'RNG00001'),
     ('F00015', 'RNG00001'),
@@ -295,7 +316,16 @@ INSERT INTO Fasilitas_Ruangan VALUES
     ('F00007', 'RNG00040'),
     ('F00014', 'RNG00040');
 
-INSERT INTO Peminjaman VALUES
+-- 100 hardcoded transaction rows for PM0001 through PM0100.
+INSERT INTO Peminjaman (
+    id_peminjaman,
+    tanggal_pengajuan,
+    detail_waktu_mulai,
+    detail_waktu_selesai,
+    keperluan,
+    Mahasiswa_nrp,
+    StatusPeminjaman_id_statuspeminjaman
+) VALUES
     ('PM0001', DATE '2026-01-05', TIMESTAMP '2026-01-08 07:00:00', TIMESTAMP '2026-01-08 09:00:00', 'Rapat organisasi mahasiswa', '5025241001', 'ST0004'),
     ('PM0002', DATE '2026-01-06', TIMESTAMP '2026-01-09 09:00:00', TIMESTAMP '2026-01-09 11:00:00', 'Pelatihan perangkat lunak', '5025241002', 'ST0004'),
     ('PM0003', DATE '2026-01-07', TIMESTAMP '2026-01-10 11:00:00', TIMESTAMP '2026-01-10 13:00:00', 'Diskusi tugas akhir', '5025241003', 'ST0002'),
@@ -397,7 +427,11 @@ INSERT INTO Peminjaman VALUES
     ('PM0099', DATE '2026-04-13', TIMESTAMP '2026-04-16 13:00:00', TIMESTAMP '2026-04-16 15:00:00', 'Rapat kepanitiaan', '5025241019', 'ST0004'),
     ('PM0100', DATE '2026-04-14', TIMESTAMP '2026-04-17 15:00:00', TIMESTAMP '2026-04-17 17:00:00', 'Kuliah tamu', '5025241020', 'ST0001');
 
-INSERT INTO Peminjaman_Ruangan VALUES
+-- Hardcoded room relationships for PM0001 through PM0100.
+INSERT INTO Peminjaman_Ruangan (
+    Peminjaman_id_peminjaman,
+    Ruangan_id_ruangan
+) VALUES
     ('PM0001', 'RNG00001'),
     ('PM0002', 'RNG00002'),
     ('PM0003', 'RNG00003'),
@@ -519,7 +553,16 @@ INSERT INTO Peminjaman_Ruangan VALUES
     ('PM0095', 'RNG00016'),
     ('PM0100', 'RNG00021');
 
-INSERT INTO Peminjaman VALUES
+-- 100 additional hardcoded transaction rows.
+INSERT INTO Peminjaman (
+    id_peminjaman,
+    tanggal_pengajuan,
+    detail_waktu_mulai,
+    detail_waktu_selesai,
+    keperluan,
+    Mahasiswa_nrp,
+    StatusPeminjaman_id_statuspeminjaman
+) VALUES
     ('PM0101', DATE '2026-03-27', TIMESTAMP '2026-04-01 08:00:00', TIMESTAMP '2026-04-01 10:00:00', 'Rapat koordinasi himpunan', '5025241001', 'ST0004'),
     ('PM0102', DATE '2026-03-28', TIMESTAMP '2026-04-02 10:00:00', TIMESTAMP '2026-04-02 12:00:00', 'Seminar proposal mahasiswa', '5025241002', 'ST0002'),
     ('PM0103', DATE '2026-03-29', TIMESTAMP '2026-04-03 12:00:00', TIMESTAMP '2026-04-03 14:00:00', 'Pelatihan desain presentasi', '5025241003', 'ST0003'),
@@ -621,7 +664,11 @@ INSERT INTO Peminjaman VALUES
     ('PM0199', DATE '2026-07-03', TIMESTAMP '2026-07-08 12:00:00', TIMESTAMP '2026-07-08 14:00:00', 'Kelas persiapan kompetisi', '5025241019', 'ST0004'),
     ('PM0200', DATE '2026-07-04', TIMESTAMP '2026-07-09 14:00:00', TIMESTAMP '2026-07-09 16:00:00', 'Kuliah tamu industri', '5025241020', 'ST0002');
 
-INSERT INTO Peminjaman_Ruangan VALUES
+-- Hardcoded room relationships for PM0101 through PM0200.
+INSERT INTO Peminjaman_Ruangan (
+    Peminjaman_id_peminjaman,
+    Ruangan_id_ruangan
+) VALUES
     ('PM0101', 'RNG00001'),
     ('PM0102', 'RNG00002'),
     ('PM0103', 'RNG00003'),
@@ -722,3 +769,5 @@ INSERT INTO Peminjaman_Ruangan VALUES
     ('PM0198', 'RNG00018'),
     ('PM0199', 'RNG00019'),
     ('PM0200', 'RNG00020');
+
+COMMIT;
